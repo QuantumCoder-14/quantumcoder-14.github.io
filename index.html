@@ -219,9 +219,9 @@
     <div class="wrap" style="padding:0 24px">
       <div class="stats">
         <div class="stat"><b>22</b><span>public repos</span></div>
-        <div class="stat"><b>7</b><span>live tools</span></div>
+        <div class="stat"><b>8</b><span>live tools</span></div>
         <div class="stat"><b>4</b><span>competitions</span></div>
-        <div class="stat"><b>249</b><span>automated tests</span></div>
+        <div class="stat"><b>294</b><span>automated tests</span></div>
       </div>
     </div>
   </section>
@@ -319,9 +319,13 @@
     <div class="wrap">
       <div class="label">tools</div>
       <h2>Use them right now</h2>
-      <p class="lede">Seven run in the browser. Seven download as a single file. None of them send your data anywhere.</p>
+      <p class="lede">Eight run in the browser. Seven download as a single file. None of them send your data anywhere.</p>
 
       <div class="tools">
+        <a class="tool" href="https://quantumcoder-14.github.io/claimcheck/" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">claimcheck</span><span class="tool__tag live">live</span></div>
+          <div class="tool__d">Score a link's risk or a text's credibility, with every point explained.</div>
+        </a>
         <a class="tool" href="https://quantumcoder-14.github.io/scamcheck/" target="_blank" rel="noopener">
           <div class="tool__top"><span class="tool__name">scamcheck</span><span class="tool__tag live">live</span></div>
           <div class="tool__d">Paste a suspicious message, see which scam patterns it matches.</div>
@@ -462,6 +466,7 @@
   var body = $('term-body'), input = $('term-input');
 
   var TOOLS = {
+    claimcheck: 'https://quantumcoder-14.github.io/claimcheck/',
     scamcheck: 'https://quantumcoder-14.github.io/scamcheck/',
     'qr-studio': 'https://quantumcoder-14.github.io/qr-studio/',
     devtoolbox: 'https://quantumcoder-14.github.io/devtoolbox/',
@@ -506,7 +511,7 @@
       line('opening ' + name + ' …');
       window.open(TOOLS[name], '_blank', 'noopener');
     } else if (head === 'stats') {
-      line('22 public repos · 7 live tools · 8 releases · 249 tests');
+      line('22 public repos · 8 live tools · 8 releases · 249 tests');
     } else if (head === 'game') {
       line('scrolling you to the game…');
       $('game').scrollIntoView({ behavior: 'smooth' });
