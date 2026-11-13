@@ -101,6 +101,17 @@
   .ach__d{font-size:14px;color:var(--dim)}
   .ach__d b{color:var(--text);font-weight:600}
 
+  /* competitions */
+  .comp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+  @media(max-width:700px){.comp{grid-template-columns:1fr}}
+  .comp__card{background:var(--bg);padding:24px 22px;transition:background .18s}
+  .comp__card:hover{background:var(--surface)}
+  .comp__name{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1.15;margin-bottom:5px}
+  .comp__country{font-family:var(--mono);font-size:10px;font-weight:400;text-transform:uppercase;letter-spacing:.1em;
+    color:var(--accent);border:1px solid var(--line);padding:2px 7px;margin-left:9px;vertical-align:3px}
+  .comp__meta{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--faint)}
+  .note{font-size:13px;color:var(--faint);margin-top:16px;max-width:60ch}
+
   /* tools */
   .tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
   @media(max-width:760px){.tools{grid-template-columns:1fr}}
@@ -163,6 +174,7 @@
     <a class="brand" href="#top">siddhant<span>@</span>neekhra<span>:~$</span></a>
     <div class="links">
       <a href="#shipped">shipped</a>
+      <a href="#competitions">competitions</a>
       <a href="#tools">tools</a>
       <a href="#game">game</a>
       <a href="#stack">stack</a>
@@ -208,7 +220,7 @@
       <div class="stats">
         <div class="stat"><b>22</b><span>public repos</span></div>
         <div class="stat"><b>7</b><span>live tools</span></div>
-        <div class="stat"><b>8</b><span>releases</span></div>
+        <div class="stat"><b>4</b><span>competitions</span></div>
         <div class="stat"><b>249</b><span>automated tests</span></div>
       </div>
     </div>
@@ -267,6 +279,39 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="competitions">
+    <div class="wrap">
+      <div class="label">competitions</div>
+      <h2>Where I have competed</h2>
+      <p class="lede">
+        Challenges I have taken part in — robotics, AI and game building. Ask me about any of
+        them; the write-ups are more interesting than a list of names.
+      </p>
+
+      <div class="comp">
+        <div class="comp__card">
+          <div class="comp__name">IRC</div>
+          <div class="comp__meta">robotics challenge</div>
+        </div>
+        <div class="comp__card">
+          <div class="comp__name">AI Challenge<span class="comp__country">Russia</span></div>
+          <div class="comp__meta">artificial intelligence</div>
+        </div>
+        <div class="comp__card">
+          <div class="comp__name">Game League</div>
+          <div class="comp__meta">game development</div>
+        </div>
+        <div class="comp__card">
+          <div class="comp__name">Scratch Codefest</div>
+          <div class="comp__meta">creative coding</div>
+        </div>
+      </div>
+
+      <p class="note">Names as I entered them. Placement details are deliberately left out until
+      I can cite them properly.</p>
     </div>
   </section>
 
