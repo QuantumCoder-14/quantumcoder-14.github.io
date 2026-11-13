@@ -3,274 +3,168 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Siddhant Neekhra — Robotics, Embedded Systems, AI</title>
-<meta name="description" content="Siddhant Neekhra (@QuantumCoder-14) — student developer building robotics, embedded systems and on-device AI. Author of SiteRakshak, a zero-telemetry browser security suite.">
+<title>Siddhant Neekhra — student developer, on-device tools</title>
+<meta name="description" content="Siddhant Neekhra (@QuantumCoder-14) — student developer building tools that run on your device: ScamCheck, QR Studio, and a set of small sharp utilities. No servers, no telemetry.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#070f0b;
-    --bg-grid:rgba(0,255,65,0.035);
-    --surface:#0c1a12;
-    --surface-2:#101f16;
-    --border:rgba(0,255,65,0.14);
-    --border-soft:rgba(255,255,255,0.07);
-    --text:#dbe8e0;
-    --text-dim:#7e9a89;
-    --text-faint:#546b5d;
-    --accent:#00ff41;
-    --accent-dim:rgba(0,255,65,0.09);
-    --accent-line:rgba(0,255,65,0.35);
+    --bg:#070f0b; --surface:#0c1a12; --surface2:#101f16;
+    --line:rgba(0,255,65,0.14); --line-soft:rgba(255,255,255,0.07);
+    --text:#dbe8e0; --dim:#89a294; --faint:#5d7566;
+    --accent:#00ff41; --accent-dim:rgba(0,255,65,0.09);
     --warn:#e0a33e;
-    --warn-dim:rgba(224,163,62,0.10);
-    --font-display:'Bricolage Grotesque','Trebuchet MS',sans-serif;
-    --font-body:'IBM Plex Sans',-apple-system,Segoe UI,sans-serif;
-    --font-mono:'JetBrains Mono','SF Mono',Consolas,monospace;
-    --maxw:1080px;
+    --display:'Bricolage Grotesque','Trebuchet MS',sans-serif;
+    --sans:'IBM Plex Sans',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
   }
   @media (prefers-color-scheme: light){
     :root{
-      --bg:#f6f8f3;
-      --bg-grid:rgba(6,90,45,0.05);
-      --surface:#ffffff;
-      --surface-2:#f0f4ec;
-      --border:rgba(6,90,45,0.18);
-      --border-soft:rgba(0,0,0,0.08);
-      --text:#11251b;
-      --text-dim:#4a6355;
-      --text-faint:#7b8f83;
-      --accent:#067a35;
-      --accent-dim:rgba(6,122,53,0.08);
-      --accent-line:rgba(6,122,53,0.4);
+      --bg:#f5f8f3; --surface:#fff; --surface2:#eef4ea;
+      --line:rgba(6,90,45,0.18); --line-soft:rgba(0,0,0,0.08);
+      --text:#11251b; --dim:#4a6355; --faint:#7b8f83;
+      --accent:#067a35; --accent-dim:rgba(6,122,53,0.08);
       --warn:#9a6206;
-      --warn-dim:rgba(154,98,6,0.10);
     }
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{
-    background-color:var(--bg);
-    background-image:
-      linear-gradient(var(--bg-grid) 1px,transparent 1px),
-      linear-gradient(90deg,var(--bg-grid) 1px,transparent 1px);
-    background-size:44px 44px;
-    color:var(--text);
-    font-family:var(--font-body);
-    font-size:16px;
-    line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   ::selection{background:var(--accent);color:var(--bg)}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
 
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 90%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft)}
+  .nav{max-width:1060px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .brand{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap}
+  .brand span{color:var(--faint);font-weight:400}
+  .links{display:flex;gap:22px;font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em}
+  .links a{color:var(--dim)}
+  .links a:hover{color:var(--accent)}
+  @media(max-width:680px){.links a:nth-child(3),.links a:nth-child(4){display:none}}
 
-  /* ---------- nav ---------- */
-  .nav{
-    position:sticky;top:0;z-index:50;
-    background:color-mix(in srgb,var(--bg) 88%,transparent);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--border-soft);
-  }
-  .nav__inner{
-    max-width:var(--maxw);margin:0 auto;padding:14px 24px;
-    display:flex;align-items:center;justify-content:space-between;gap:20px;
-  }
-  .nav__brand{
-    font-family:var(--font-mono);font-size:13px;font-weight:700;
-    letter-spacing:.02em;color:var(--accent);white-space:nowrap;
-  }
-  .nav__brand span{color:var(--text-faint);font-weight:400}
-  .nav__links{display:flex;gap:26px;font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase}
-  .nav__links a{color:var(--text-dim);transition:color .18s}
-  .nav__links a:hover{color:var(--accent)}
-  @media(max-width:640px){.nav__links{gap:16px;font-size:11px}.nav__links a:nth-child(3){display:none}}
-
-  /* ---------- shared bits ---------- */
-  .label{
-    font-family:var(--font-mono);font-size:11.5px;font-weight:500;
-    letter-spacing:.13em;text-transform:uppercase;color:var(--text-faint);
-    display:flex;align-items:center;gap:9px;margin-bottom:22px;
-  }
+  .label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--faint);
+    display:flex;align-items:center;gap:9px;margin-bottom:20px}
   .label::before{content:"";width:6px;height:6px;background:var(--accent);flex:none;box-shadow:0 0 0 3px var(--accent-dim)}
-  section{padding:72px 0;border-top:1px solid var(--border-soft)}
-  section:first-of-type{border-top:none}
-  h2{
-    font-family:var(--font-display);font-weight:800;
-    font-size:clamp(26px,3.4vw,38px);line-height:1.12;
-    letter-spacing:-.02em;margin-bottom:14px;
-  }
-  .lede{color:var(--text-dim);max-width:62ch;font-size:16.5px}
+  section{padding:64px 0;border-top:1px solid var(--line-soft)}
+  h2{font-family:var(--display);font-weight:800;font-size:clamp(25px,3.3vw,36px);line-height:1.12;letter-spacing:-.02em;margin-bottom:12px}
+  .lede{color:var(--dim);max-width:62ch;margin-bottom:30px}
 
-  /* ---------- hero ---------- */
-  .hero{padding:84px 0 68px;position:relative}
-  .hero::after{
-    content:"";position:absolute;inset:0;pointer-events:none;z-index:-1;
-    background:radial-gradient(700px 320px at 12% 0%,var(--accent-dim),transparent 70%);
-  }
-  .hero__grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:56px;align-items:start}
-  @media(max-width:860px){.hero__grid{grid-template-columns:1fr;gap:40px}}
-  .hero h1{
-    font-family:var(--font-display);font-weight:800;
-    font-size:clamp(38px,6.2vw,66px);line-height:1.02;letter-spacing:-.035em;
-    margin-bottom:18px;
-  }
-  .hero h1 em{font-style:normal;color:var(--accent)}
-  .hero__role{
-    font-family:var(--font-mono);font-size:13.5px;color:var(--accent);
-    letter-spacing:.02em;margin-bottom:22px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
-  }
-  .hero__role .sep{color:var(--text-faint)}
-  .hero__bio{color:var(--text-dim);max-width:54ch;margin-bottom:30px;font-size:16.5px}
-  .hero__bio strong{color:var(--text);font-weight:600}
-  .btns{display:flex;flex-wrap:wrap;gap:12px}
-  .btn{
-    font-family:var(--font-mono);font-size:12.5px;font-weight:500;letter-spacing:.05em;
-    padding:11px 20px;border:1px solid var(--accent-line);
-    color:var(--accent);background:var(--accent-dim);
-    transition:background .18s,color .18s,border-color .18s;display:inline-flex;align-items:center;gap:8px;
-  }
-  .btn:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)}
-  .btn--ghost{background:transparent;border-color:var(--border);color:var(--text-dim)}
-  .btn--ghost:hover{background:transparent;border-color:var(--accent-line);color:var(--accent)}
+  /* hero */
+  .hero{padding:72px 0 56px;position:relative}
+  .hero::after{content:"";position:absolute;inset:0;z-index:-1;
+    background:radial-gradient(680px 300px at 12% 0%,var(--accent-dim),transparent 70%)}
+  .hero__grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:44px;align-items:start}
+  @media(max-width:900px){.hero__grid{grid-template-columns:1fr;gap:34px}}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(36px,5.8vw,62px);line-height:1.02;letter-spacing:-.035em;margin-bottom:16px}
+  h1 em{font-style:normal;color:var(--accent)}
+  .role{font-family:var(--mono);font-size:13px;color:var(--accent);margin-bottom:20px;display:flex;flex-wrap:wrap;gap:8px}
+  .role span{color:var(--faint)}
+  .bio{color:var(--dim);max-width:52ch;margin-bottom:26px}
+  .bio strong{color:var(--text);font-weight:600}
+  .btns{display:flex;flex-wrap:wrap;gap:10px}
+  .btn{font-family:var(--mono);font-size:12.5px;padding:11px 19px;border:1px solid var(--line);
+    color:var(--accent);background:var(--accent-dim);transition:.18s;display:inline-flex;gap:8px;align-items:center}
+  .btn:hover{background:var(--accent);color:var(--bg)}
+  .btn.ghost{background:transparent;color:var(--dim)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);background:transparent}
 
-  .term{
-    border:1px solid var(--border);background:var(--surface);
-    font-family:var(--font-mono);font-size:12.5px;line-height:1.85;
-  }
-  .term__head{
-    padding:9px 14px;border-bottom:1px solid var(--border);
-    color:var(--text-faint);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-    display:flex;justify-content:space-between;
-  }
-  .term__body{padding:16px 16px 18px;overflow-x:auto}
-  .term__body p{white-space:pre;color:var(--text-dim)}
+  /* terminal */
+  .term{border:1px solid var(--line);background:var(--surface);font-family:var(--mono);font-size:12.5px}
+  .term__head{padding:8px 13px;border-bottom:1px solid var(--line);color:var(--faint);font-size:10.5px;
+    letter-spacing:.1em;text-transform:uppercase;display:flex;justify-content:space-between}
+  .term__body{padding:14px;height:250px;overflow-y:auto;line-height:1.75}
+  .term__body p{white-space:pre-wrap;word-break:break-word;color:var(--dim)}
+  .term__body .cmd{color:var(--text)}
   .term__body .k{color:var(--accent)}
-  .term__body .v{color:var(--text)}
-  .term__body .c{color:var(--text-faint)}
-  .cursor{display:inline-block;width:7px;height:14px;background:var(--accent);vertical-align:-2px;animation:blink 1.15s steps(1) infinite}
-  @keyframes blink{50%{opacity:0}}
+  .term__body .warn{color:var(--warn)}
+  .term__input{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:9px 13px}
+  .term__input span{color:var(--accent);font-family:var(--mono);font-size:12.5px}
+  .term__input input{flex:1;background:none;border:none;color:var(--text);font-family:var(--mono);font-size:12.5px;outline:none}
 
-  /* ---------- stats ---------- */
-  .stats{
-    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-    gap:1px;background:var(--border-soft);border:1px solid var(--border-soft);
-  }
-  @media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  .stat{background:var(--bg);padding:22px 20px}
-  .stat__n{
-    font-family:var(--font-display);font-weight:800;font-size:30px;line-height:1;
-    letter-spacing:-.03em;color:var(--accent);margin-bottom:7px;
-  }
-  .stat__l{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--text-faint)}
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+  @media(max-width:700px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .stat{background:var(--bg);padding:20px 18px}
+  .stat b{display:block;font-family:var(--display);font-weight:800;font-size:29px;line-height:1;color:var(--accent);margin-bottom:6px;letter-spacing:-.03em}
+  .stat span{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
 
-  /* ---------- flagship ---------- */
-  .flag{
-    border:1px solid var(--border);background:var(--surface);
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,0.95fr);
-  }
-  @media(max-width:860px){.flag{grid-template-columns:1fr}}
-  .flag__main{padding:34px 32px;border-right:1px solid var(--border-soft);min-width:0}
-  @media(max-width:860px){.flag__main{border-right:none;border-bottom:1px solid var(--border-soft)}}
-  .flag__tag{
-    display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);
-    font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--warn);background:var(--warn-dim);border:1px solid color-mix(in srgb,var(--warn) 32%,transparent);
-    padding:4px 10px;margin-bottom:18px;
-  }
-  .flag__tag::before{content:"";width:5px;height:5px;background:var(--warn)}
-  .flag h3{
-    font-family:var(--font-display);font-weight:800;font-size:clamp(24px,3vw,32px);
-    letter-spacing:-.025em;line-height:1.1;margin-bottom:6px;
-  }
-  .flag__sub{font-family:var(--font-mono);font-size:12px;color:var(--text-faint);margin-bottom:18px}
-  .flag__desc{color:var(--text-dim);margin-bottom:24px;font-size:15.5px}
-  .flag__desc strong{color:var(--text);font-weight:600}
-  .flag__side{padding:30px 28px;background:var(--surface-2);min-width:0}
-  .feat{list-style:none;display:grid;gap:11px}
-  .feat li{
-    position:relative;padding-left:20px;font-size:14px;color:var(--text-dim);
-    overflow-wrap:break-word;
-  }
-  .feat li::before{
-    content:"";position:absolute;left:0;top:8px;width:7px;height:1px;background:var(--accent);
-  }
-  .feat li b{color:var(--text);font-weight:600}
-  .feat__title{
-    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--text-faint);margin-bottom:16px;
-  }
+  /* achievements */
+  .ach{display:grid;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+  .ach__row{background:var(--bg);padding:18px 20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+  .ach__n{font-family:var(--mono);font-size:11px;color:var(--accent);border:1px solid var(--line);
+    width:24px;height:24px;display:flex;align-items:center;justify-content:center;flex:none;margin-top:2px}
+  .ach__t{font-weight:600;font-size:15px;margin-bottom:3px}
+  .ach__d{font-size:14px;color:var(--dim)}
+  .ach__d b{color:var(--text);font-weight:600}
 
-  /* ---------- projects ---------- */
-  .projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border-soft);border:1px solid var(--border-soft)}
-  @media(max-width:760px){.projects{grid-template-columns:1fr}}
-  .proj{background:var(--bg);padding:24px 22px;transition:background .18s;min-width:0}
-  .proj:hover{background:var(--surface)}
-  .proj__top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:9px}
-  .proj__name{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--text)}
-  .proj__name::before{content:"/";color:var(--accent);margin-right:2px}
-  .proj__lang{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint);white-space:nowrap}
-  .proj__desc{font-size:14px;color:var(--text-dim);overflow-wrap:break-word}
-  .proj__flag{
-    font-family:var(--font-mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;
-    color:var(--text-faint);border:1px solid var(--border-soft);padding:2px 6px;margin-left:8px;vertical-align:2px;
-  }
+  /* tools */
+  .tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+  @media(max-width:760px){.tools{grid-template-columns:1fr}}
+  .tool{background:var(--bg);padding:20px 22px;transition:background .18s;display:block}
+  .tool:hover{background:var(--surface)}
+  .tool__top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:6px}
+  .tool__name{font-family:var(--mono);font-size:14px;font-weight:700}
+  .tool__name::before{content:"/";color:var(--accent);margin-right:2px}
+  .tool__tag{font-family:var(--mono);font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);
+    border:1px solid var(--line-soft);padding:2px 6px;white-space:nowrap}
+  .tool__tag.live{color:var(--accent);border-color:var(--line)}
+  .tool__d{font-size:13.5px;color:var(--dim)}
+  .tool:hover .tool__d{color:var(--text)}
 
-  /* ---------- stack ---------- */
-  .stack{display:grid;gap:26px}
-  .stack__row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;align-items:start}
-  @media(max-width:640px){.stack__row{grid-template-columns:1fr;gap:10px}}
-  .stack__k{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);padding-top:5px}
-  .chips{display:flex;flex-wrap:wrap;gap:7px}
-  .chip{
-    font-family:var(--font-mono);font-size:12px;color:var(--text-dim);
-    border:1px solid var(--border-soft);background:var(--surface);padding:4px 10px;
-  }
+  /* game */
+  .game{border:1px solid var(--line);background:var(--surface);overflow:hidden}
+  .game__top{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;
+    align-items:center;gap:12px;flex-wrap:wrap}
+  .game__title{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint)}
+  .game__score{font-family:var(--mono);font-size:12px;color:var(--accent)}
+  .game__msg{padding:26px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.7;min-height:120px;
+    background:var(--surface2);color:var(--text);border-bottom:1px solid var(--line)}
+  .game__actions{padding:16px 20px;display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .gbtn{font-family:var(--mono);font-size:12.5px;padding:10px 18px;border:1px solid var(--line);
+    background:transparent;color:var(--dim);cursor:pointer;transition:.15s}
+  .gbtn:hover{border-color:var(--accent);color:var(--accent)}
+  .gbtn.scam:hover{border-color:#ff5a5a;color:#ff5a5a}
+  .gbtn.legit:hover{border-color:var(--accent);color:var(--accent)}
+  .gbtn:disabled{opacity:.4;cursor:default}
+  .game__fb{padding:0 22px 20px;font-size:14px;display:none}
+  .game__fb.on{display:block}
+  .game__fb b{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  .game__fb.right b{color:var(--accent)}.game__fb.wrong b{color:#ff7a7a}
+  .game__fb p{color:var(--dim);margin-top:6px;font-size:13.5px}
 
-  /* ---------- about / hardware ---------- */
-  .split{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px}
-  @media(max-width:820px){.split{grid-template-columns:1fr;gap:32px}}
-  .hw{border-left:2px solid var(--accent-line);padding-left:20px;display:grid;gap:16px}
-  .hw__item{font-family:var(--font-mono);font-size:13px;color:var(--text-dim)}
-  .hw__item span{color:var(--text-faint);display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
-  .hw__item b{color:var(--text);font-weight:500}
-  .about p{color:var(--text-dim);margin-bottom:16px;max-width:58ch}
-  .about p strong{color:var(--text);font-weight:600}
+  /* stack */
+  .stack{display:grid;gap:20px}
+  .srow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;align-items:start}
+  @media(max-width:640px){.srow{grid-template-columns:1fr;gap:8px}}
+  .sk{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);padding-top:4px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-family:var(--mono);font-size:11.5px;color:var(--dim);border:1px solid var(--line-soft);
+    background:var(--surface);padding:4px 9px}
 
-  /* ---------- contact ---------- */
-  .contact{border:1px solid var(--border);background:var(--surface);padding:44px 36px;text-align:center}
-  .contact h2{margin-bottom:10px}
-  .contact p{color:var(--text-dim);max-width:50ch;margin:0 auto 26px}
+  /* contact */
+  .contact{border:1px solid var(--line);background:var(--surface);padding:38px 32px;text-align:center}
+  .contact h2{margin-bottom:8px}
+  .contact p{color:var(--dim);max-width:48ch;margin:0 auto 22px}
   .contact .btns{justify-content:center}
-  .mail{font-family:var(--font-mono);font-size:12.5px;color:var(--text-faint);margin-top:22px;overflow-wrap:break-word}
-  .mail a{color:var(--text-dim);border-bottom:1px dotted var(--border);transition:color .18s}
-  .mail a:hover{color:var(--accent)}
 
-  footer{border-top:1px solid var(--border-soft);padding:26px 0 40px}
-  .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--font-mono);font-size:11px;color:var(--text-faint);letter-spacing:.05em}
+  footer{border-top:1px solid var(--line-soft);padding:24px 0 40px}
+  .foot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--faint)}
   .foot a:hover{color:var(--accent)}
-
-  /* ---------- motion ---------- */
-  .rise{opacity:0;transform:translateY(14px);animation:rise .6s cubic-bezier(.2,.7,.3,1) forwards}
-  @keyframes rise{to{opacity:1;transform:none}}
-  .d1{animation-delay:.05s}.d2{animation-delay:.13s}.d3{animation-delay:.21s}.d4{animation-delay:.29s}
-  @media(prefers-reduced-motion:reduce){
-    .rise{animation:none;opacity:1;transform:none}
-    .cursor{animation:none}
-    html{scroll-behavior:auto}
-  }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav__inner">
-    <a class="nav__brand" href="#top">siddhant<span>@</span>neekhra<span>:~$</span></a>
-    <div class="nav__links">
-      <a href="#work">work</a>
-      <a href="#projects">projects</a>
+<nav>
+  <div class="nav">
+    <a class="brand" href="#top">siddhant<span>@</span>neekhra<span>:~$</span></a>
+    <div class="links">
+      <a href="#shipped">shipped</a>
+      <a href="#tools">tools</a>
+      <a href="#game">game</a>
       <a href="#stack">stack</a>
       <a href="#contact">contact</a>
     </div>
@@ -279,257 +173,225 @@
 
 <main id="top">
 
-  <!-- HERO -->
-  <section class="hero">
+  <section class="hero" style="border-top:none">
     <div class="wrap">
       <div class="hero__grid">
         <div>
-          <div class="label rise d1">whoami</div>
-          <h1 class="rise d1">Siddhant<br>Neekhra<em>.</em></h1>
-          <div class="hero__role rise d2">
-            <span>Robotics</span><span class="sep">/</span>
-            <span>Embedded Systems</span><span class="sep">/</span>
-            <span>Applied AI</span>
-          </div>
-          <p class="hero__bio rise d2">
-            Student developer building software that has to survive contact with the
-            real world — firmware on an Arduino, a model on a camera feed, or a
-            security engine running inside a browser tab. <strong>Zero servers, zero
-            telemetry, everything on the device</strong> is the constraint I keep choosing.
-          </p>
-          <div class="btns rise d3">
-            <a class="btn" href="https://github.com/QuantumCoder-14" target="_blank" rel="noopener">github / QuantumCoder-14</a>
-            <a class="btn btn--ghost" href="https://github.com/QuantumCoder-14/SiteRakshak" target="_blank" rel="noopener">site rakshak &rarr;</a>
-          </div>
-        </div>
-
-        <div class="term rise d3">
-          <div class="term__head"><span>~/profile</span><span>bash</span></div>
-          <div class="term__body">
-<p><span class="k">$</span> <span class="v">whoami</span>
-<span class="c">siddhant neekhra</span>
-<span class="k">$</span> <span class="v">cat focus.txt</span>
-<span class="c">robotics · embedded · ai/ml</span>
-<span class="c">automation · computer vision</span>
-<span class="k">$</span> <span class="v">ls ~/stack</span>
-<span class="c">python  c++  c  javascript</span>
-<span class="c">arduino  esp32  opencv</span>
-<span class="k">$</span> <span class="v">uptime</span>
-<span class="c">still shipping since 2025</span>
-<span class="k">$</span> <span class="cursor"></span></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <section style="padding:0;border-top:1px solid var(--border-soft)">
-    <div class="wrap" style="padding:0 24px">
-      <div class="stats">
-        <div class="stat"><div class="stat__n">153</div><div class="stat__l">detection rules shipped</div></div>
-        <div class="stat"><div class="stat__n">0</div><div class="stat__l">servers required</div></div>
-        <div class="stat"><div class="stat__n">0</div><div class="stat__l">telemetry events</div></div>
-        <div class="stat"><div class="stat__n">7</div><div class="stat__l">public repos</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FLAGSHIP -->
-  <section id="work">
-    <div class="wrap">
-      <div class="label">featured work</div>
-      <h2>SiteRakshak</h2>
-      <p class="lede" style="margin-bottom:34px">
-        An on-device defence layer for the browser: anti-malware, anti-phishing,
-        fraud and misinformation detection that runs entirely in the tab.
-      </p>
-
-      <div class="flag">
-        <div class="flag__main">
-          <div class="flag__tag">flagship · v16</div>
-          <h3>One suite, three shields.</h3>
-          <div class="flag__sub">javascript · manifest v3 · chrome &amp; edge · source-available</div>
-          <p class="flag__desc">
-            The core is <strong>SiteArmor</strong>: a heuristic engine that scores pages and
-            downloads before you trust them. <strong>FactCheck</strong> is the optional second
-            module, wiring free public APIs (Google Fact Check Tools, Wikipedia, WHO, NASA)
-            into a local credibility score. A third civic module is in the repo.
-            No backend is required for any protection feature — nothing leaves the browser
-            unless you opt in.
+          <div class="label">whoami</div>
+          <h1>Siddhant<br>Neekhra<em>.</em></h1>
+          <div class="role"><span style="color:var(--accent)">Student developer</span><span>/</span><span>Robotics</span><span>/</span><span>On-device tools</span></div>
+          <p class="bio">
+            I build small software that runs <strong>entirely on your device</strong> — no server,
+            no account, no telemetry. A scam checker, a QR generator, a set of command-line
+            utilities that each do one thing and are tested before they ship.
           </p>
           <div class="btns">
-            <a class="btn" href="https://github.com/QuantumCoder-14/SiteRakshak" target="_blank" rel="noopener">read the source</a>
-            <a class="btn btn--ghost" href="https://github.com/QuantumCoder-14/SiteRakshak#readme" target="_blank" rel="noopener">install guide</a>
+            <a class="btn" href="https://github.com/QuantumCoder-14" target="_blank" rel="noopener">github / QuantumCoder-14</a>
+            <a class="btn ghost" href="https://quantumcoder-14.github.io/scamcheck/" target="_blank" rel="noopener">try ScamCheck &rarr;</a>
           </div>
         </div>
 
-        <div class="flag__side">
-          <div class="feat__title">what it actually detects</div>
-          <ul class="feat">
-            <li><b>153 heuristic rules</b> — tech-support scams, digital-arrest fraud, KYC expiry, wallet drainers, job-fee scams</li>
-            <li><b>Download scanning</b> — 16 known malware hashes plus obfuscation-decode passes for base64 / UTF-16LE / hex droppers</li>
-            <li><b>Archive bombs</b> — ratio and chain rules, zip-slip, encrypted-archive escalation</li>
-            <li><b>CDN integrity</b> — SHA-256 baselines for 18 library releases; tampered scripts get blocked</li>
-            <li><b>Fingerprinting</b> — hooks Canvas, WebGL, AudioContext, WebRTC and font probing</li>
-            <li><b>Quishing</b> — decodes QR codes on the page and flags the link behind them</li>
-            <li><b>Dark patterns</b> — fake countdowns, false scarcity, confirmshaming</li>
-            <li><b>Prompt injection</b> — invisible instructions aimed at AI agents; visible text is never flagged</li>
-          </ul>
+        <div class="term">
+          <div class="term__head"><span>~/portfolio</span><span>type a command</span></div>
+          <div class="term__body" id="term-body"></div>
+          <div class="term__input">
+            <span>$</span>
+            <input id="term-input" autocomplete="off" spellcheck="false" aria-label="Terminal input" placeholder="help">
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
+  <section style="padding:0;border-top:1px solid var(--line-soft)">
+    <div class="wrap" style="padding:0 24px">
+      <div class="stats">
+        <div class="stat"><b>22</b><span>public repos</span></div>
+        <div class="stat"><b>7</b><span>live tools</span></div>
+        <div class="stat"><b>8</b><span>releases</span></div>
+        <div class="stat"><b>249</b><span>automated tests</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="shipped">
     <div class="wrap">
-      <div class="label">other projects</div>
-      <h2>Everything else in the workshop</h2>
-      <p class="lede" style="margin-bottom:34px">
-        Utilities written to scratch an itch, plus forks I contribute to or learn from.
+      <div class="label">what I have shipped</div>
+      <h2>Things that exist, and that I can point at</h2>
+      <p class="lede">
+        Every line below is verifiable from a public repository. No prizes, no invented
+        credentials — just work you can open, run, and disagree with.
       </p>
 
-      <div class="projects">
-        <div class="proj">
-          <div class="proj__top">
-            <div class="proj__name">CrapClean</div>
-            <div class="proj__lang">batchfile</div>
+      <div class="ach">
+        <div class="ach__row">
+          <div class="ach__n">01</div>
+          <div>
+            <div class="ach__t">ScamCheck — an offline scam-message checker</div>
+            <div class="ach__d">21 rule groups across nine categories, built for the fraud Indian users actually receive: fake CBI calls, KYC phishing, customs-fee parcels, task-job scams. <b>41 tests</b>, including a no-false-positive check so a genuine OTP message is not flagged.</div>
           </div>
-          <p class="proj__desc">A one-click Windows cleanup script. Drop the .bat, run it, get disk space back. The first thing I ever put on the internet.</p>
         </div>
-
-        <div class="proj">
-          <div class="proj__top">
-            <div class="proj__name">RoadSOS</div>
-            <div class="proj__lang">kotlin</div>
+        <div class="ach__row">
+          <div class="ach__n">02</div>
+          <div>
+            <div class="ach__t">QR Studio — six kinds of QR code, generated locally</div>
+            <div class="ach__d">UPI payment intents, Wi-Fi credentials, links with trackers stripped, contact cards, calendar events, free text. <b>41 tests</b> plus every code decoded back with OpenCV to prove the payload survives.</div>
           </div>
-          <p class="proj__desc">Road-safety emergency system — the kind of project that makes embedded and mobile work worth doing.<span class="proj__flag">fork</span></p>
         </div>
-
-        <div class="proj">
-          <div class="proj__top">
-            <div class="proj__name">arduinomap</div>
-            <div class="proj__lang">javascript</div>
+        <div class="ach__row">
+          <div class="ach__n">03</div>
+          <div>
+            <div class="ach__t">CrapClean 2.0 — rescued a broken Windows cleanup script</div>
+            <div class="ach__d">The original batch file deleted the temp <em>folders</em>, wiped Prefetch, and called <code>deltree</code>, which has not existed since XP. Rewritten as a windowed tool with preview, logging and an undo. The original is preserved untouched as <b>v1.0</b>.</div>
           </div>
-          <p class="proj__desc">A free, open-source Arduino curriculum for everyone. Contributing to the docs and tooling.<span class="proj__flag">fork</span></p>
         </div>
-
-        <div class="proj">
-          <div class="proj__top">
-            <div class="proj__name">WolframClientForPython</div>
-            <div class="proj__lang">python</div>
+        <div class="ach__row">
+          <div class="ach__n">04</div>
+          <div>
+            <div class="ach__t">downsort — sort Downloads, with an undo</div>
+            <div class="ach__d">Ten categories, duplicate detection by SHA-256, and a log that replays backwards. <b>26 tests</b>, including one asserting two runs in a day cannot destroy the first one's result.</div>
           </div>
-          <p class="proj__desc">Call Wolfram Language functions from Python — useful for symbolic maths next to a sensor pipeline.<span class="proj__flag">fork</span></p>
         </div>
-
-        <div class="proj">
-          <div class="proj__top">
-            <div class="proj__name">Metabatch</div>
-            <div class="proj__lang">in progress</div>
+        <div class="ach__row">
+          <div class="ach__n">05</div>
+          <div>
+            <div class="ach__t">Four sharp command-line utilities</div>
+            <div class="ach__d">passgen (CSPRNG passwords and passphrases), urlclean (70 tracking parameters), sizewise (what is eating your disk), imgpress (shrink images without touching the originals). <b>50 tests</b> between them, no dependencies except Pillow.</div>
           </div>
-          <p class="proj__desc">Early-stage experiment. Repo is up, README is not — yet.</p>
         </div>
-
-        <div class="proj">
-          <div class="proj__top">
-            <div class="proj__name">desktop</div>
-            <div class="proj__lang">turbowarp</div>
+        <div class="ach__row">
+          <div class="ach__n">06</div>
+          <div>
+            <div class="ach__t">249 automated assertions, all passing from fresh clones</div>
+            <div class="ach__d">Not "it worked when I opened it". Every project ships a test suite; the counts above come from cloning each repository and running its suite as the README documents.</div>
           </div>
-          <p class="proj__desc">My own remix of TurboWarp Desktop — tinkering with the Scratch ecosystem.<span class="proj__flag">fork</span></p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- STACK -->
+  <section id="tools">
+    <div class="wrap">
+      <div class="label">tools</div>
+      <h2>Use them right now</h2>
+      <p class="lede">Seven run in the browser. Seven download as a single file. None of them send your data anywhere.</p>
+
+      <div class="tools">
+        <a class="tool" href="https://quantumcoder-14.github.io/scamcheck/" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">scamcheck</span><span class="tool__tag live">live</span></div>
+          <div class="tool__d">Paste a suspicious message, see which scam patterns it matches.</div>
+        </a>
+        <a class="tool" href="https://quantumcoder-14.github.io/qr-studio/" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">qr-studio</span><span class="tool__tag live">live</span></div>
+          <div class="tool__d">UPI, Wi-Fi, link, contact and event QR codes. Nothing uploaded.</div>
+        </a>
+        <a class="tool" href="https://quantumcoder-14.github.io/devtoolbox/" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">devtoolbox</span><span class="tool__tag live">live</span></div>
+          <div class="tool__d">JSON format and validate, Base64, URL encoding, SHA hashing.</div>
+        </a>
+        <a class="tool" href="https://quantumcoder-14.github.io/textkit/" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">textkit</span><span class="tool__tag live">live</span></div>
+          <div class="tool__d">Case, counts, line sorting, dedupe, slugs, regex replace.</div>
+        </a>
+        <a class="tool" href="https://quantumcoder-14.github.io/palette/" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">palette</span><span class="tool__tag live">live</span></div>
+          <div class="tool__d">HEX/RGB/HSL, tint ramps, and real WCAG contrast verdicts.</div>
+        </a>
+        <a class="tool" href="https://quantumcoder-14.github.io/markdown-live/" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">markdown-live</span><span class="tool__tag live">live</span></div>
+          <div class="tool__d">Write Markdown, get escaped HTML you can download.</div>
+        </a>
+        <a class="tool" href="https://github.com/QuantumCoder-14/CrapClean/releases/latest" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">crapclean</span><span class="tool__tag">windows</span></div>
+          <div class="tool__d">Clear Windows clutter with a preview, a log and an undo.</div>
+        </a>
+        <a class="tool" href="https://github.com/QuantumCoder-14/NetReset/releases/latest" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">netreset</span><span class="tool__tag">windows</span></div>
+          <div class="tool__d">Fix "connected but no internet" from one menu.</div>
+        </a>
+        <a class="tool" href="https://github.com/QuantumCoder-14/downsort/releases/latest" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">downsort</span><span class="tool__tag">python</span></div>
+          <div class="tool__d">Sort a messy Downloads folder. Dry run by default, undo built in.</div>
+        </a>
+        <a class="tool" href="https://github.com/QuantumCoder-14/passgen/releases/latest" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">passgen</span><span class="tool__tag">python</span></div>
+          <div class="tool__d">Passwords, passphrases and UUIDs from the system CSPRNG.</div>
+        </a>
+        <a class="tool" href="https://github.com/QuantumCoder-14/urlclean/releases/latest" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">urlclean</span><span class="tool__tag">python</span></div>
+          <div class="tool__d">Strip tracking parameters from links. Never fetches the URL.</div>
+        </a>
+        <a class="tool" href="https://github.com/QuantumCoder-14/sizewise/releases/latest" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">sizewise</span><span class="tool__tag">python</span></div>
+          <div class="tool__d">Find the folders actually eating your disk.</div>
+        </a>
+        <a class="tool" href="https://github.com/QuantumCoder-14/imgpress/releases/latest" target="_blank" rel="noopener">
+          <div class="tool__top"><span class="tool__name">imgpress</span><span class="tool__tag">python</span></div>
+          <div class="tool__d">Shrink images before an upload limit bites. Originals untouched.</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="game">
+    <div class="wrap">
+      <div class="label">have a go</div>
+      <h2>Scam or not?</h2>
+      <p class="lede">
+        Eight messages, real patterns from the ScamCheck rule set. Decide whether each one is a
+        scam before you look at the answer — that hesitation is the whole skill.
+      </p>
+
+      <div class="game">
+        <div class="game__top">
+          <span class="game__title">round <span id="g-round">1</span> of 8</span>
+          <span class="game__score" id="g-score">0 correct</span>
+        </div>
+        <div class="game__msg" id="g-msg">Loading…</div>
+        <div class="game__actions">
+          <button class="gbtn scam" id="g-scam">This is a scam</button>
+          <button class="gbtn legit" id="g-legit">Looks genuine</button>
+          <button class="gbtn" id="g-next" style="display:none">Next &rarr;</button>
+          <button class="gbtn" id="g-restart" style="display:none">Play again</button>
+        </div>
+        <div class="game__fb" id="g-fb"><b id="g-verdict">—</b><p id="g-why"></p></div>
+      </div>
+    </div>
+  </section>
+
   <section id="stack">
     <div class="wrap">
       <div class="label">toolchain</div>
       <h2>What I build with</h2>
-      <div class="stack" style="margin-top:30px">
-        <div class="stack__row">
-          <div class="stack__k">Languages</div>
-          <div class="chips">
-            <span class="chip">Python</span><span class="chip">C++</span><span class="chip">C</span>
-            <span class="chip">JavaScript</span><span class="chip">Kotlin</span>
-          </div>
-        </div>
-        <div class="stack__row">
-          <div class="stack__k">Embedded</div>
-          <div class="chips">
-            <span class="chip">Arduino</span><span class="chip">ESP32</span><span class="chip">I2C</span>
-            <span class="chip">UART</span><span class="chip">GPIO</span><span class="chip">PWM</span><span class="chip">HID</span>
-          </div>
-        </div>
-        <div class="stack__row">
-          <div class="stack__k">AI &amp; vision</div>
-          <div class="chips">
-            <span class="chip">OpenCV</span><span class="chip">Jupyter</span><span class="chip">Model deployment</span>
-          </div>
-        </div>
-        <div class="stack__row">
-          <div class="stack__k">Security</div>
-          <div class="chips">
-            <span class="chip">Manifest V3</span><span class="chip">Heuristic detection</span>
-            <span class="chip">YARA-lite rules</span><span class="chip">Hashing</span>
-          </div>
-        </div>
-        <div class="stack__row">
-          <div class="stack__k">Daily drivers</div>
-          <div class="chips">
-            <span class="chip">Git</span><span class="chip">GitHub</span><span class="chip">VS Code</span><span class="chip">Linux</span>
-          </div>
-        </div>
+      <div class="stack" style="margin-top:26px">
+        <div class="srow"><div class="sk">Languages</div><div class="chips">
+          <span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">C++</span>
+          <span class="chip">C</span><span class="chip">Kotlin</span><span class="chip">PowerShell</span><span class="chip">Batch</span>
+        </div></div>
+        <div class="srow"><div class="sk">Embedded</div><div class="chips">
+          <span class="chip">Arduino</span><span class="chip">ESP32</span><span class="chip">I2C</span>
+          <span class="chip">UART</span><span class="chip">GPIO</span><span class="chip">PWM</span>
+        </div></div>
+        <div class="srow"><div class="sk">Practice</div><div class="chips">
+          <span class="chip">Test-first</span><span class="chip">Client-side only</span><span class="chip">No telemetry</span>
+          <span class="chip">Manifest V3</span><span class="chip">OpenCV</span>
+        </div></div>
+        <div class="srow"><div class="sk">Daily</div><div class="chips">
+          <span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">VS Code</span><span class="chip">Linux</span>
+        </div></div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="wrap">
-      <div class="label">about</div>
-      <div class="split">
-        <div class="about">
-          <h2>Teenager with a keyboard,<br>too many ideas.</h2>
-          <p style="margin-top:14px">
-            I'm a student. Most of what I know came from breaking things — a motor driver,
-            a bootloader, a badly written extension permission. The pattern that stuck:
-            <strong>build the thing that runs without anyone's permission</strong>, on hardware
-            you own, with no server to go down.
-          </p>
-          <p>
-            That's why the projects here lean local-first. SiteRakshak scores threats
-            inside the browser because asking a server is a privacy decision you didn't
-            agree to. The same instinct shows up in the embedded work: sense, decide, act,
-            without a round trip.
-          </p>
-          <p>
-            Currently going deeper on computer vision and embedded AI, and looking for
-            people to build with.
-          </p>
-        </div>
-        <div class="hw">
-          <div class="hw__item"><span>favourite board</span><b>Arduino UNO R4 WiFi</b></div>
-          <div class="hw__item"><span>dream board</span><b>Arduino GIGA R1 WiFi</b></div>
-          <div class="hw__item"><span>loop</span><b>build → test → break → fix</b></div>
-          <div class="hw__item"><span>github since</span><b>March 2025</b></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
   <section id="contact">
     <div class="wrap">
       <div class="contact">
         <h2>Build something with me</h2>
-        <p>Open to collaboration on robotics, embedded, or anything that needs to run on-device. The fastest way in is GitHub.</p>
+        <p>Open to collaboration on robotics, embedded work, or anything that has to run on the device it sits on.</p>
         <div class="btns">
           <a class="btn" href="https://github.com/QuantumCoder-14" target="_blank" rel="noopener">github.com/QuantumCoder-14</a>
-          <a class="btn btn--ghost" href="mailto:sidthehacker07@gmail.com">send a mail</a>
+          <a class="btn ghost" href="mailto:sidthehacker07@gmail.com">send a mail</a>
         </div>
-        <div class="mail">or write to <a href="mailto:sidthehacker07@gmail.com">sidthehacker07@gmail.com</a></div>
       </div>
     </div>
   </section>
@@ -538,7 +400,7 @@
     <div class="wrap">
       <div class="foot">
         <span>© <span id="yr">2026</span> Siddhant Neekhra</span>
-        <span>built by hand · no trackers · no cookies</span>
+        <span>no trackers · no cookies · <a href="https://github.com/QuantumCoder-14/quantumcoder-14.github.io" target="_blank" rel="noopener">source</a></span>
       </div>
     </div>
   </footer>
@@ -546,7 +408,148 @@
 </main>
 
 <script>
-  document.getElementById('yr').textContent = new Date().getFullYear();
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  $('yr').textContent = new Date().getFullYear();
+
+  /* ================= terminal ================= */
+  var body = $('term-body'), input = $('term-input');
+
+  var TOOLS = {
+    scamcheck: 'https://quantumcoder-14.github.io/scamcheck/',
+    'qr-studio': 'https://quantumcoder-14.github.io/qr-studio/',
+    devtoolbox: 'https://quantumcoder-14.github.io/devtoolbox/',
+    textkit: 'https://quantumcoder-14.github.io/textkit/',
+    palette: 'https://quantumcoder-14.github.io/palette/',
+    'markdown-live': 'https://quantumcoder-14.github.io/markdown-live/',
+    crapclean: 'https://github.com/QuantumCoder-14/CrapClean/releases/latest',
+    netreset: 'https://github.com/QuantumCoder-14/NetReset/releases/latest',
+    downsort: 'https://github.com/QuantumCoder-14/downsort/releases/latest',
+    passgen: 'https://github.com/QuantumCoder-14/passgen/releases/latest',
+    urlclean: 'https://github.com/QuantumCoder-14/urlclean/releases/latest',
+    sizewise: 'https://github.com/QuantumCoder-14/sizewise/releases/latest',
+    imgpress: 'https://github.com/QuantumCoder-14/imgpress/releases/latest'
+  };
+
+  function line(text, cls) {
+    var p = document.createElement('p');
+    if (cls) p.className = cls;
+    p.innerHTML = text;
+    body.appendChild(p);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function run(raw) {
+    var cmd = raw.trim();
+    if (!cmd) return;
+    line('<span class="k">$</span> <span class="cmd">' + escapeHtml(cmd) + '</span>');
+    var parts = cmd.split(/\s+/);
+    var head = parts[0].toLowerCase();
+
+    if (head === 'help') {
+      line('available: <span class="k">whoami</span> · <span class="k">ls</span> · <span class="k">open &lt;tool&gt;</span> · <span class="k">stats</span> · <span class="k">game</span> · <span class="k">clear</span>');
+    } else if (head === 'whoami') {
+      line('siddhant neekhra — student developer');
+      line('robotics · embedded · on-device tools · no servers');
+    } else if (head === 'ls') {
+      line(Object.keys(TOOLS).join('  '));
+    } else if (head === 'open') {
+      var name = parts[1];
+      if (!name) { line('usage: open &lt;tool&gt;  —  try <span class="k">ls</span> first'); return; }
+      if (!TOOLS[name]) { line('no tool called "' + escapeHtml(name) + '". try <span class="k">ls</span>', 'warn'); return; }
+      line('opening ' + name + ' …');
+      window.open(TOOLS[name], '_blank', 'noopener');
+    } else if (head === 'stats') {
+      line('22 public repos · 7 live tools · 8 releases · 249 tests');
+    } else if (head === 'game') {
+      line('scrolling you to the game…');
+      $('game').scrollIntoView({ behavior: 'smooth' });
+    } else if (head === 'clear') {
+      body.innerHTML = '';
+    } else if (head === 'sudo') {
+      line('nice try. this is a static page.', 'warn');
+    } else {
+      line('command not found: ' + escapeHtml(head) + ' — try <span class="k">help</span>', 'warn');
+    }
+  }
+
+  function escapeHtml(text) {
+    return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  input.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') { run(input.value); input.value = ''; }
+  });
+
+  line('welcome. type <span class="k">help</span> and press enter.');
+  line('<span class="k">$</span> <span class="cmd">whoami</span>');
+  line('siddhant neekhra — student developer');
+
+  /* ================= scam or not ================= */
+  var ROUNDS = [
+    { text: 'Dear customer, your KYC is expiring today. Your account will be blocked within 24 hours. Update at http://sbi-kyc-verify.xyz/update',
+      answer: 'scam', why: 'Two tells: an expiry threat and a lookalike domain that is not on sbi.co.in. Banks never close an account through a link.' },
+    { text: 'Your OTP for login is 4821. Do not share it with anyone. — HDFC Bank',
+      answer: 'legit', why: 'Genuine OTP messages never ask you to share the code. The warning is the honest part.' },
+    { text: 'This is Inspector Sharma from CBI Cyber Cell. A case has been registered against you. Do not tell anyone. Transfer Rs 85,000 to the government account.',
+      answer: 'scam', why: 'No Indian agency arrests or settles cases over a call, and none asks for secrecy. The "government account" does not exist.' },
+    { text: 'Your order #4821 was delivered to the reception desk at 4:12 pm. Thanks for shopping with us.',
+      answer: 'legit', why: 'Plain delivery confirmation: no link, no deadline, no request for anything.' },
+    { text: 'Congratulations! You have won a lucky draw prize of Rs 50,000. Pay Rs 499 processing fee to claim your prize.',
+      answer: 'scam', why: 'You cannot win a draw you never entered, and a real prize never requires a fee up front.' },
+    { text: 'Hello, this is Dr Mehta\'s clinic confirming your appointment tomorrow at 4 pm. Reply if you need to reschedule.',
+      answer: 'legit', why: 'Specific, checkable, and it asks nothing of you beyond a reply you chose to send.' },
+    { text: 'Your parcel is held at customs due to illegal items found inside. Pay delivery fee of Rs 249 to release it: https://bit.ly/3xK9pQz',
+      answer: 'scam', why: 'Couriers do not collect customs duty over a shortened link, and the "illegal items" story exists purely to frighten you.' },
+    { text: 'Part time job available. Earn Rs 3000 per day liking videos. Pay Rs 500 registration fee to unlock your tasks. Join our Telegram group.',
+      answer: 'scam', why: 'Work never asks you to pay first. Pay-per-task offers are the most common job scam in India right now.' }
+  ];
+
+  var index = 0, score = 0, answered = false;
+  var msg = $('g-msg'), fb = $('g-fb'), verdict = $('g-verdict'), why = $('g-why');
+  var bScam = $('g-scam'), bLegit = $('g-legit'), bNext = $('g-next'), bRestart = $('g-restart');
+
+  function show() {
+    answered = false;
+    msg.textContent = ROUNDS[index].text;
+    $('g-round').textContent = index + 1;
+    $('g-score').textContent = score + ' correct';
+    fb.className = 'game__fb';
+    bScam.disabled = bLegit.disabled = false;
+    bScam.style.display = bLegit.style.display = '';
+    bNext.style.display = 'none';
+    bRestart.style.display = 'none';
+  }
+
+  function answer(choice) {
+    if (answered) return;
+    answered = true;
+    var round = ROUNDS[index];
+    var right = choice === round.answer;
+    if (right) score++;
+    $('g-score').textContent = score + ' correct';
+    verdict.textContent = right ? 'correct' : 'wrong — it was ' + (round.answer === 'scam' ? 'a scam' : 'genuine');
+    why.textContent = round.why;
+    fb.className = 'game__fb on ' + (right ? 'right' : 'wrong');
+    bScam.disabled = bLegit.disabled = true;
+    bScam.style.display = bLegit.style.display = 'none';
+    bNext.style.display = index === ROUNDS.length - 1 ? 'none' : '';
+    bRestart.style.display = index === ROUNDS.length - 1 ? '' : 'none';
+    if (index === ROUNDS.length - 1) {
+      msg.textContent = 'That is all eight. You got ' + score + ' of 8.';
+      fb.className = 'game__fb on ' + (score >= 7 ? 'right' : 'wrong');
+      verdict.textContent = score >= 7 ? 'sharp eye' : score >= 5 ? 'decent, but keep checking' : 'worth reading the rules again';
+    }
+  }
+
+  bScam.addEventListener('click', function () { answer('scam'); });
+  bLegit.addEventListener('click', function () { answer('legit'); });
+  bNext.addEventListener('click', function () { index++; show(); });
+  bRestart.addEventListener('click', function () { index = 0; score = 0; show(); });
+
+  show();
+})();
 </script>
 </body>
 </html>
