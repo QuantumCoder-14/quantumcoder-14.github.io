@@ -1,6 +1,6 @@
-# s-procoder.github.io
+# quantumcoder-14.github.io
 
-The source of **[s-procoder.github.io](https://s-procoder.github.io)** — a single
+The source of **[quantumcoder-14.github.io](https://quantumcoder-14.github.io)** — a single
 `index.html`, no build step, no framework, no dependencies to install.
 
 ## Editing it
